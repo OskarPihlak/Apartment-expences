@@ -1,0 +1,42 @@
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+    body{
+        background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+        background: linear-gradient(to right, #25c481, #25b7c4);
+        font-family: 'Roboto', sans-serif;
+    }
+</style>
+
+<section>
+    <!--for demo wrap-->
+    <h1>ALL DATA</h1>
+    <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.amount}}</td>
+                <td>{{this.date}}</td>
+                <td>{{this.description}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
+<form action="/">
+<button>Back</button>
+</form>

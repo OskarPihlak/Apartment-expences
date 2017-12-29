@@ -1,0 +1,21 @@
+{
+  "name": "apartment-expence-management",
+  "version": "1.0.0",
+  "description": "To manage finance home",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Oskar Pihlak",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.0.0-beta.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.11",
+    "jquery": "^3.2.1",
+    "path": "^0.12.7",
+    "mongoose": "^4.13.7"
+  }
+}

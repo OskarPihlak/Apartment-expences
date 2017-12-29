@@ -1,0 +1,133 @@
+<form action="/history">
+    <button>History</button>
+</form>
+    <div id="login">
+        <form method="post" action="/post/payment">
+            <fieldset>
+                <p><input name="name" type="text" required placeholder="Name"></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                <p><input name="amount" type="number" step="0.01" required placeholder="Amount"></p> <!-- JS because of IE support; better: placeholder="Password" -->
+                <p><input name="date" type="date" required></p>
+                <p><input name="description" type="text" placeholder="Wat category stuff iz dis" required></p>
+                <p><input type="submit" value="Submit"></p>
+            </fieldset>
+        </form>
+    </div>
+
+<input type="hidden" class="oskar" value="{{peoplespent.oskar.spent}}">
+<input type="hidden" class="sandra" value="{{peoplespent.sandra.spent}}">
+<input type="hidden" class="uibo" value="{{peoplespent.uibo.spent}}">
+<input type="hidden" class="luiza" value="{{peoplespent.luiza.spent}}">
+<div id="container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<div class="printer">
+    <section class="black-precentage-section">
+        <article>
+            <div class="chart">
+                <div class="bar bar-cartridge bar-{{peoplespent.oskar.precentage}} navy">
+                    <div class="face top">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-0">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face floor">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-a"></div>
+                    <div class="face side-b"></div>
+                    <div class="face side-1">
+                        <div class="growing-bar growing-bar-adjustment">
+                            <p class="p-adjust-black">Oskar {{peoplespent.oskar.spent}}
+                                €  {{peoplespent.oskar.precentage}}%</p></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+</div>
+</div>
+<div class="printer">
+    <section class="black-precentage-section">
+        <article>
+            <div class="chart">
+                <div class="bar bar-cartridge bar-{{ peoplespent.sandra.precentage}} lime">
+                    <div class="face top">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-0">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face floor">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-a"></div>
+                    <div class="face side-b"></div>
+                    <div class="face side-1">
+                        <div class="growing-bar growing-bar-adjustment">
+                            <p class="p-adjust-black">Sandra {{peoplespent.sandra.spent}}
+                                € {{peoplespent.sandra.precentage}}%</p></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+</div>
+</div>
+<div class="printer">
+    <section class="black-precentage-section">
+        <article>
+            <div class="chart">
+                <div class="bar bar-cartridge bar-{{peoplespent.uibo.precentage}} cyan">
+                    <div class="face top">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-0">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face floor">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-a"></div>
+                    <div class="face side-b"></div>
+                    <div class="face side-1">
+                        <div class="growing-bar growing-bar-adjustment">
+                            <p class="p-adjust-black">Uibo {{peoplespent.uibo.spent}}€  {{peoplespent.uibo.precentage}}
+                                %</p></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+</div>
+</div>
+<div class="printer">
+    <section class="black-precentage-section">
+        <article>
+            <div class="chart">
+                <div class="bar bar-cartridge bar-{{peoplespent.luiza.precentage}} red">
+                    <div class="face top">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-0">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face floor">
+                        <div class="growing-bar"></div>
+                    </div>
+                    <div class="face side-a"></div>
+                    <div class="face side-b"></div>
+                    <div class="face side-1">
+                        <div class="growing-bar growing-bar-adjustment">
+                            <p class="p-adjust-black">Luiza {{peoplespent.luiza.spent}}
+                                €  {{peoplespent.luiza.precentage}}%</p></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>
+<div id="containerpie" style="fill:#e5e5e5; min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
