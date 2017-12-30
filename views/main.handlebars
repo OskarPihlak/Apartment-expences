@@ -1,3 +1,4 @@
+
 <div id="login">
     <form method="post" action="/post/payment">
         <fieldset>
@@ -12,10 +13,10 @@
     </form>
 </div>
 
-<input type="hidden" class="oskar" value="{{peoplespent.oskar.spent}}">
-<input type="hidden" class="sandra" value="{{peoplespent.sandra.spent}}">
-<input type="hidden" class="uibo" value="{{peoplespent.uibo.spent}}">
-<input type="hidden" class="luiza" value="{{peoplespent.luiza.spent}}">
+<input type="hidden" class="oskar" value="{{people.oskar.spent}}">
+<input type="hidden" class="sandra" value="{{people.sandra.spent}}">
+<input type="hidden" class="uibo" value="{{people.uibo.spent}}">
+<input type="hidden" class="luiza" value="{{people.luiza.spent}}">
 <div id="container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <div class="bar-container">
@@ -23,7 +24,7 @@
         <section class="black-precentage-section">
             <article>
                 <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math peoplespent.oskar.precentage '*' 2}} navy">
+                    <div class="bar bar-cartridge bar-{{math people.oskar.precentage '*' 2}} navy">
                         <div class="face top">
                             <div class="growing-bar"></div>
                         </div>
@@ -37,7 +38,7 @@
                         <div class="face side-b"></div>
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Oskar {{peoplespent.oskar.spent}}
+                                <p class="p-adjust-black">Oskar {{people.oskar.spent}}
                                     €  </p></div>
                         </div>
                     </div>
@@ -49,7 +50,7 @@
         <section class="black-precentage-section">
             <article>
                 <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math peoplespent.sandra.precentage '*' 2}} gray">
+                    <div class="bar bar-cartridge bar-{{math people.sandra.precentage '*' 2}} gray">
                         <div class="face top">
                             <div class="growing-bar"></div>
                         </div>
@@ -63,7 +64,7 @@
                         <div class="face side-b"></div>
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Sandra {{peoplespent.sandra.spent}}
+                                <p class="p-adjust-black">Sandra {{people.sandra.spent}}
                                     € </p></div>
                         </div>
                     </div>
@@ -76,7 +77,7 @@
         <section class="black-precentage-section">
             <article>
                 <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math peoplespent.uibo.precentage '*' 2}} lime">
+                    <div class="bar bar-cartridge bar-{{math people.uibo.precentage '*' 2}} lime">
                         <div class="face top">
                             <div class="growing-bar"></div>
                         </div>
@@ -90,7 +91,7 @@
                         <div class="face side-b"></div>
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Uibo {{peoplespent.uibo.spent}} € </p></div>
+                                <p class="p-adjust-black">Uibo {{people.uibo.spent}} € </p></div>
                         </div>
                     </div>
                 </div>
@@ -102,7 +103,7 @@
         <section class="black-precentage-section">
             <article>
                 <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math peoplespent.luiza.precentage '*' 2}} yellow">
+                    <div class="bar bar-cartridge bar-{{math people.luiza.precentage '*' 2}} yellow">
                         <div class="face top">
                             <div class="growing-bar"></div>
                         </div>
@@ -116,7 +117,7 @@
                         <div class="face side-b"></div>
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Luiza {{peoplespent.luiza.spent}}
+                                <p class="p-adjust-black">Luiza {{people.luiza.spent}}
                                     €  </p></div>
                         </div>
                     </div>

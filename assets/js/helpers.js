@@ -22,3 +22,7 @@ module.exports.capitalizeFirstLetter = function capitalizeFirstLetter(string) {
 module.exports.daysInMonth = function daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
 };
+
+module.exports.round = function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+};
