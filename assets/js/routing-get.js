@@ -78,12 +78,12 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[0]} €`,
+                        "text": `Is this info correct ? ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[0]} € /  ${message[1]}`,
                         "buttons": [
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload":"good,"+message[0]
+                                "payload":"good,"+message[0]+','+message[1]
                             },
                             {
                                 "type": "postback",
@@ -154,21 +154,21 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
-            response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €`};
+            response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
             let financeRecord = new db.finance({
-                name: helpers.capitalizeFirstLetter(payload[1]),
-                amountSpent: payload[2],
+                name: helpers.capitalizeFirstLetter(sender_id_name),
+                amountSpent: payload[1],
                 day: date.getDate(),
                 month: (date.getMonth() + 1),
                 year: date.getFullYear(),
-                description: 'test'
+                description: payload[2]
             });
-            console.log(helpers.capitalizeFirstLetter(payload[1]));
-            console.log(payload[2]);
+            console.log(helpers.capitalizeFirstLetter(sender_id_name));
+            console.log(payload[1]);
             console.log(date.getDate());
             console.log(date.getMonth() + 1);
             console.log(date.getFullYear());
-            console.log('');
+            console.log(payload[2]);
            /* financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
