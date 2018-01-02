@@ -225,6 +225,7 @@ module.exports = (app) => {
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
+                if (sender_psid === 1657207370991802){ sender_psid= 'Oskar'}
                 console.log('Sender PSID: ' + sender_psid);
 
                 // Check if the event is a message or postback and
