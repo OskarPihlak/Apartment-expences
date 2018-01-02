@@ -1,4 +1,4 @@
-module.exports = (app) =>{
+module.exports = (app) => {
     const db = require('./db.js');
     const express = require('express');
     const bodyParser = require('body-parser');
@@ -9,14 +9,14 @@ module.exports = (app) =>{
     let request = require('request');
 
     app.get('/', function (req, res) {
-        res.redirect('/' + dates.year +'-'+ dates.month);
+        res.redirect('/' + dates.year + '-' + dates.month);
     });
 
-    app.get('/:id', (req, res)=> {
+    app.get('/:id', (req, res) => {
         let query_data = (req.params.id).split('-');
-        console.log(' year:'+query_data[0],'month: '+ query_data[1]);
+        console.log(' year:' + query_data[0], 'month: ' + query_data[1]);
 
-        let query_string={};
+        let query_string = {};
         if (req.params.id !== 'All time') {
             query_string = {'month': query_data[1], 'year': query_data[0]};
             db.finance.find(query_string).then(result => {
@@ -49,53 +49,52 @@ module.exports = (app) =>{
         }
     });
 
-    app.get('/history', (req, res)=> {
+    app.get('/history', (req, res) => {
         db.finance.find({}).then(result => {
             let build_main = helpers.build_main_object(result);
 
             res.render('history', {
                 data: build_main.array
             });
-        }).catch(err => {throw err });
+        }).catch(err => {
+            throw err
+        });
     });
+
     // Handles messages events
     function handleMessage(sender_psid, received_message) {
         let response;
 
         // Checks if the message contains text
         console.log(received_message.text);
-            if((received_message.text).startsWith('#')){
+        if ((received_message.text).startsWith('#')) {
             let message = (received_message.text).slice(1).split('-');
 
 
-                response = {
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "Is this info correct?",
-                                "subtitle": "Tap a button to answer.",
-                                "text": `{name: ${message[0]}, 
+            response = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "text": `{name: ${message[0]}, 
                                           date: ${message[1]},
                                           amount: ${message[2]}}`,
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "Yes!",
-                                        "payload": "yes",
-                                    },
-                                    {
-                                        "type": "postback",
-                                        "title": "No!",
-                                        "payload": "no",
-                                    }
-                                ],
-                            }]
-                        }
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "Yes!",
+                                "payload": "yes",
+                            },
+                            {
+                                "type": "postback",
+                                "title": "No!",
+                                "payload": "no",
+                            }
+                        ],
                     }
-                };
-            } else if (received_message.text) {
+                }
+            };
+        } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
             response = {
@@ -144,9 +143,9 @@ module.exports = (app) =>{
 
         // Set the response based on the postback payload
         if (payload === 'yes') {
-            response = { "text": "Thanks!" }
+            response = {"text": "Thanks!"}
         } else if (payload === 'no') {
-            response = { "text": "Oops, try sending another image." }
+            response = {"text": "Oops, try sending another image."}
         }
         // Send the message to acknowledge the postback
         callSendAPI(sender_psid, response);
@@ -165,7 +164,7 @@ module.exports = (app) =>{
         // Send the HTTP request to the Messenger Platform
         request({
             "uri": "https://graph.facebook.com/v2.6/me/messages",
-            "qs": { "access_token": 'EAAH0ZBiD0bXEBAJZBU6UHWyZBKk8shvJCkLjXZCTv5797tZAcxg0WrR1biZBLQZCC4W69ZAh8H3hUbu8CgeQY9PbA2ySHMGJCvhfXfsD2qhGLfenWBk2y2f5vO7GDQfO6iWeC1djqomczvbFJXi0mwCVPpDPYZAMgQVDN1YkkerVnpAZDZD' },
+            "qs": {"access_token": 'EAAH0ZBiD0bXEBAJZBU6UHWyZBKk8shvJCkLjXZCTv5797tZAcxg0WrR1biZBLQZCC4W69ZAh8H3hUbu8CgeQY9PbA2ySHMGJCvhfXfsD2qhGLfenWBk2y2f5vO7GDQfO6iWeC1djqomczvbFJXi0mwCVPpDPYZAMgQVDN1YkkerVnpAZDZD'},
             "method": "POST",
             "json": request_body
         }, (err, res, body) => {
@@ -178,7 +177,6 @@ module.exports = (app) =>{
     }
 
 
-
     app.post('/bot/webhook', (req, res) => {
 
         // Parse the request body from the POST
@@ -188,7 +186,7 @@ module.exports = (app) =>{
         if (body.object === 'page') {
 
             // Iterate over each entry - there may be multiple if batched
-            body.entry.forEach(function(entry) {
+            body.entry.forEach(function (entry) {
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
