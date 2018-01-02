@@ -136,7 +136,7 @@ module.exports = (app) => {
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback, recieved_messages) {
+    function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
         console.log(received_postback);
         let date = new Date();
@@ -159,7 +159,8 @@ module.exports = (app) => {
                 year: date.getFullYear(),
                 description: ''
             });
-            console.log()
+            let lol = handleMessage().message[0];
+            console.log(lol);
             /*            financeRecord.save().then(function (err, post) {
                             if (err) {
                                 return (err)
@@ -226,7 +227,7 @@ module.exports = (app) => {
                     console.log(JSON.stringify(webhook_event));
                     handleMessage(sender_psid, webhook_event.message);
                     if (webhook_event.postback) {
-                        handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
+                        handlePostback(sender_psid, webhook_event.postback);
                     }
                 }
 
