@@ -78,7 +78,7 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[0]} € /  ${message[1]}`,
+                        "text": `Is this info correct ? ${sender_id_name} bought  ${message[1]} on the ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} for ${message[0]} €`,
                         "buttons": [
                             {
                                 "type": "postback",
