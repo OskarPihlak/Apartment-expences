@@ -23,10 +23,21 @@ const financeSchema = new Schema({
         type: Number,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now,
+    day: {
+        type: Number,
         required: true
+    },
+    month: {
+        type: Number,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    date:{
+      type: Date,
+      required: false
     },
     description:{
         type: String,

@@ -1,14 +1,26 @@
-
 <div id="login">
     <form method="post" action="/post/payment">
         <fieldset>
-            <p><input name="name" type="text" required placeholder="Name"></p>
+            <p><select class="submit-check" name="name">
+                <option>Oskar</option>
+                <option>Sandra</option>
+                <option>Uibo</option>
+                <option>Luiza</option>
+            </select></p>
             <!-- JS because of IE support; better: placeholder="Username" -->
-            <p><input name="amount" type="number" step="0.01" required placeholder="Amount"></p>
+            <p><input class="submit-check" name="amount" type="number" step="0.01" required placeholder="Amount"
+                      value="2.25"></p>
             <!-- JS because of IE support; better: placeholder="Password" -->
-            <p><input name="date" type="date" required></p>
-            <p><input name="description" type="text" placeholder="Wat category stuff iz dis" required></p>
-            <p><input type="submit" value="Submit"></p>
+            <input hidden id="date123" type="date" value="2017-06-09">
+            <p><input class="submit-check" id="date" name="date" type="date" value="{{date.year}}-{{date.month}}-{{date.day}}" required></p>
+            <p><select class="submit-check" name="description">
+                <option>Food</option>
+                <option>Alchohol</option>
+                <option>Food & Alcohol</option>
+                <option>Housekeeping stuff</option>
+                <option>Other shit</option>
+            </select></p>
+            <p><input class="submit-check" type="submit" value="Submit"></p>
         </fieldset>
     </form>
 </div>
@@ -17,6 +29,19 @@
 <input type="hidden" class="sandra" value="{{people.sandra.spent}}">
 <input type="hidden" class="uibo" value="{{people.uibo.spent}}">
 <input type="hidden" class="luiza" value="{{people.luiza.spent}}">
+
+<form class="filter-form" method="post" action="/filter/update">
+  <div>
+    <input class="submit-check filter-button" type="submit" value="Filter">
+    <select class="submit-check filter-options" name="description">
+        <option>All time</option>
+        {{#each past_months}}
+            <option class="{{this.year}}-{{this.month_number}}">{{this.year}}-{{this.month_name}}</option>
+        {{/each}}
+    </select>
+  </div>
+</form>
+<p class="selected">{{selected}}</p>
 <div id="container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <div class="bar-container">
@@ -39,7 +64,7 @@
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
                                 <p class="p-adjust-black">Oskar {{people.oskar.spent}}
-                                    €  </p></div>
+                                    € </p></div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +143,7 @@
                         <div class="face side-1">
                             <div class="growing-bar growing-bar-adjustment">
                                 <p class="p-adjust-black">Luiza {{people.luiza.spent}}
-                                    €  </p></div>
+                                    € </p></div>
                         </div>
                     </div>
                 </div>

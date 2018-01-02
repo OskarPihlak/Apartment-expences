@@ -1,79 +1,65 @@
 module.exports = (app) =>{
     const db = require('./db.js');
     const helpers = require('./helpers.js');
-    let date = new Date();
+    const moment = require('moment');
+    let month_selection = helpers.generate_month_selections();
+    let dates = helpers.date_now();
+    let s = {};
+    let v = {'month':'1', 'year':'2'};
+    db.finance.find(s).then(result => {
+       console.log(result);
+    });
 
-    let currentAmountOfDaysInMonth = helpers.daysInMonth(date.getMonth() + 1, date.getYear());
-
-    let dateObjectArray = [];
-    let masterObjectArray = [];
 
     app.get('/', function (req, res) {
-        let people ={oskar:{name:'Oskar', spent:0},
-                    sandra:{name:'Sandra', spent:0},
-                      uibo:{name:'Uibo', spent:0},
-                     luiza:{name:'Luiza', spent:0}};
-
-        //get data from database and build an object
-        db.finance.find({}).then(result => {
-            for (let i = 0; i < result.length; i++) {
-                let dateData = result[i].date.toLocaleDateString('en-GB').split('/');
-                dateObjectArray.push({
-                    name: result[i].name,
-                    amount: (result[i].amountSpent),
-                    day: dateData[1],
-                    month: dateData[0],
-                    year: dateData[2]
-                });
-
-                //get everyones spending sum
-                switch (result[i].name){
-                    case people.oskar.name:
-                        people.oskar.spent += result[i].amountSpent; break;
-                    case people.sandra.name:
-                        people.sandra.spent += result[i].amountSpent; break;
-                    case people.uibo.name:
-                        people.uibo.spent += result[i].amountSpent; break;
-                    case people.luiza.name:
-                        people.luiza.spent += result[i].amountSpent; break;
-                }
-            }
-
-            let total_spending = people.oskar.spent + people.sandra.spent + people.uibo.spent + people.luiza.spent;
-            people.oskar.precentage = ((people.oskar.spent / total_spending) * 100).toFixed(2);
-            people.sandra.precentage = ((people.sandra.spent / total_spending) * 100).toFixed(2);
-            people.uibo.precentage = ((people.uibo.spent / total_spending) * 100).toFixed(2);
-            people.luiza.precentage = ((people.luiza.spent / total_spending) * 100).toFixed(2);
-
-            res.render('main', {
-                data: dateObjectArray,
-                people: people
-            });
-        });
+        res.redirect('/' + dates.year +'-'+ dates.month);
     });
+
+    app.get('/:id', (req, res)=> {
+        let query_data = (req.params.id).split('-');
+        console.log(' year:'+query_data[0],'month: '+ query_data[1]);
+
+        let query_string={};
+        if (req.params.id !== 'All time') {
+            query_string = {'month': query_data[1], 'year': query_data[0]};
+            db.finance.find(query_string).then(result => {
+                let build_main = helpers.build_main_object(result);
+                console.log(result);
+                res.render('main', {
+                    data: build_main.array,
+                    people: build_main.people,
+                    past_months: month_selection.month_difference_array,
+                    selected: req.params.id,
+                    date: dates
+                });
+            }).catch(err => {
+                throw err
+            });
+        } else {
+            db.finance.find(query_string).then(result => {
+                let build_main = helpers.build_main_object(result);
+
+                res.render('main', {
+                    data: build_main.array,
+                    people: build_main.people,
+                    past_months: month_selection.month_difference_array,
+                    selected: req.params.id,
+                    date: dates
+                });
+            }).catch(err => {
+                throw err
+            });
+        }
+    });
+
     app.get('/history', (req, res)=> {
         db.finance.find({}).then(result => {
-            let dateObjectArray = [];
-            for (let i = 0; i < result.length; i++) {
-                let dateData = result[i].date.toLocaleDateString('en-GB').split('/');
+            let build_main = helpers.build_main_object(result);
 
-                dateObjectArray.push({
-                    name: result[i].name,
-                    amount: result[i].amountSpent,
-                    date: dateData[1] +'/'+ dateData[0] +'/'+ dateData[2],
-                    day: dateData[1],
-                    month: dateData[0],
-                    year: dateData[2],
-                    description: result[i].description
-                });
-            }
-            console.log(dateObjectArray);
             res.render('history', {
-                data: dateObjectArray
+                data: build_main.array
             });
-        }).catch(err => {
-            throw err
-        });
+        }).catch(err => {throw err });
     });
 
 };

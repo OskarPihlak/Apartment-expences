@@ -817,7 +817,7 @@ strong {
   width: 300px;
 }
 
-form fieldset input {
+.submit-check {
   background: #e5e5e5;
   border: none;
   border-radius: 3px;
@@ -1010,4 +1010,34 @@ form fieldset a:hover { text-decoration: underline; }
 #cssmenu > ul > li:hover > a:after,
 #cssmenu > ul > li > a:hover:after {
   background: #47c9af;
+}
+
+.filter-button{
+  margin: 0 auto;
+  width: 300px;
+  left: 42%;
+  transform: translateX(-50%);
+  position: relative;
+  background-color: #4a8ddf;
+  color: white;
+}
+.filter-options{
+  margin: 0 auto;
+  width: 300px;
+  left: 42%;
+  transform: translateX(-50%);
+  position: relative;
+  background-color: #444349;
+  color: white;
+}
+.selected{
+  text-align: center;
+  margin: 15px;
+}
+.filter-form{
+
+}
+
+.filter-div{
+
 }
