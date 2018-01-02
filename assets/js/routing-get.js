@@ -69,8 +69,8 @@ module.exports = (app) => {
         console.log('handlemessages///////////////////////'+sender_id_name);
         // Checks if the message contains text
         console.log('handle message ' + received_message.text);
-        if ((received_message.text).startsWith('#')) {
-            let message = (received_message.text).slice(1).split('-');
+        if (((received_message.text).toUpperCase()).startsWith('X')) {
+            let message = (received_message.text).slice(1).split('.');
 
 
             response = {
@@ -161,7 +161,7 @@ module.exports = (app) => {
                 day: date.getDate(),
                 month: (date.getMonth() + 1),
                 year: date.getFullYear(),
-                description: payload[2]
+                description: payload[2].toLowerCase()
             });
             console.log(helpers.capitalizeFirstLetter(sender_id_name));
             console.log(payload[1]);
@@ -169,13 +169,13 @@ module.exports = (app) => {
             console.log(date.getMonth() + 1);
             console.log(date.getFullYear());
             console.log(payload[2]);
-           /* financeRecord.save().then(function (err, post) {
+            financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
                 }
             }).catch(err => {
                 throw err
-            });*/
+            });
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
