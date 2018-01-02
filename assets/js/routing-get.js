@@ -6,6 +6,7 @@ module.exports = (app) =>{
     const moment = require('moment');
     let month_selection = helpers.generate_month_selections();
     let dates = helpers.date_now();
+    let request = require('request');
 
     app.get('/', function (req, res) {
         res.redirect('/' + dates.year +'-'+ dates.month);
