@@ -86,7 +86,7 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "No!",
-                                "payload": "no",
+                                "payload": "bad",
                             }
                         ],
                     }
@@ -138,14 +138,33 @@ module.exports = (app) => {
 
         // Get the payload for the postback
         let payload = received_postback.payload;
-
+        let dates = helpers.generate_month_selections();
         // Set the response based on the postback payload
         if (payload === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": "Very good"}
+            response = {"text": `Very good, pushing to server {name: ${message[0]}, amount: ${message[1]}, date ${dates.day_number}-${dates.month_number}-${dates.year}`};
+            let financeRecord = new db.finance({
+                name: helpers.capitalizeFirstLetter(req.body.name),
+                amountSpent: req.body.amount,
+                day: dates.day_number,
+                month: days.month_number,
+                year: days.year,
+                description: (req.body.description).toLowerCase()
+            });
+            financeRecord.save().then(function (err, post) {
+                if (err) {
+                    return (err)
+                }
+            }).catch(err => {
+                throw err
+            });
+
+
+        } else if (payload === 'bad') {
+            response = {"text": "Oops, try sending it again."}
         }
         // Send the message to acknowledge the postback
         callSendAPI(sender_psid, response);

@@ -80,10 +80,11 @@ module.exports.generate_month_selections = ()=>{
     let dateStarted = new Date(2017,11); //december 2017
     let difference = exports.monthDiff(dateStarted,dateNow);
     for(let i = 0; i < difference ; i++ ){
-        let splitted_date = moment(dateStarted).add(i,'months').format('YYYY-MMMM-MM').split('-');
+        let splitted_date = moment(dateStarted).add(i,'months').format('YYYY-MMMM-MM-DD').split('-');
         month_difference_array.push({year: splitted_date[0],
             month_name: splitted_date[1],
             month_number: splitted_date[2],
+            day_number: splitted_date[3]
         });
     }
     return {month_difference_array: month_difference_array};
