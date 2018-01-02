@@ -4,6 +4,7 @@ module.exports = (app) => {
     const bodyParser = require('body-parser');
     const helpers = require('./helpers.js');
     const moment = require('moment');
+    const colors = require('colors/safe');
     let month_selection = helpers.generate_month_selections();
     let dates = helpers.date_now();
     let request = require('request');
@@ -78,7 +79,7 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? ${sender_id_name} bought  ${message[1]} on the ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} for ${message[0]} €`,
+                        "text": `Is this info correct ? ${sender_id_name} bought  ${(message[1]).bold().red} on the ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} for ${message[0]} €`,
                         "buttons": [
                             {
                                 "type": "postback",
