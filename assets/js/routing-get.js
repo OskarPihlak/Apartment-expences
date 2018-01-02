@@ -160,6 +160,12 @@ module.exports = (app) => {
                 year: date.getFullYear(),
                 description: ''
             });
+            console.log(helpers.capitalizeFirstLetter(payload[1]));
+            console.log(payload[2]);
+            console.log(date.getDate());
+            console.log(moment(date.getMonth() + 1));
+            console.log(date.getFullYear());
+            console.log('');
             financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
