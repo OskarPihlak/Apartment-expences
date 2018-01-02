@@ -81,12 +81,12 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload": "good-query",
+                                "payload": "good",
                             },
                             {
                                 "type": "postback",
                                 "title": "No!",
-                                "payload": "bad-query",
+                                "payload": "no",
                             }
                         ],
                     }
@@ -129,30 +129,23 @@ module.exports = (app) => {
         }
 
         // Send the response message
-        callSendAPI(sender_psid, response, received_message);
+        callSendAPI(sender_psid, response);
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback, received_message) {
+    function handlePostback(sender_psid, received_postback) {
         let response;
-        let message = (received_message.text).slice(1).split('-');
+
         // Get the payload for the postback
         let payload = received_postback.payload;
 
         // Set the response based on the postback payload
-        switch (payload) {
-            case 'yes':
-                response = {"text": "Thanks, pushing to server!"};
-                break;
-            case 'no':
-                response = {"text": "Oops, try sending it again."};
-                break;
-            case 'good-query':
-                response = {"text": `Nice, sending data to server! {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`};
-                break;
-            case 'bad-query':
-                response = {"text": "Okay, try sending it again"};
-                break;
+        if (payload === 'yes') {
+            response = {"text": "Thanks, pushing to server!"}
+        } else if (payload === 'no') {
+            response = {"text": "Oops, try sending it again."}
+        } else if (payload === 'good') {
+            response = {"text": "Very good"}
         }
         // Send the message to acknowledge the postback
         callSendAPI(sender_psid, response);
