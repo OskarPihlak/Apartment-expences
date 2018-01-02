@@ -154,16 +154,16 @@ module.exports = (app) => {
             response = {"text": `Very good, pushing to server:  ${payload[1]} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[2]} €`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(payload[1]),
-                amountSpent: payload[2],//exports.message_values.spent,
+                amountSpent: payload[2],
                 day: date.getDate(),
                 month: (date.getMonth() + 1),
                 year: date.getFullYear(),
-                description: ''
+                description: 'test'
             });
             console.log(helpers.capitalizeFirstLetter(payload[1]));
             console.log(payload[2]);
             console.log(date.getDate());
-            console.log(moment(date.getMonth() + 1));
+            console.log(date.getMonth() + 1);
             console.log(date.getFullYear());
             console.log('');
             financeRecord.save().then(function (err, post) {
