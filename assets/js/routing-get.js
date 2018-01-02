@@ -156,7 +156,7 @@ module.exports = (app) => {
                 name: helpers.capitalizeFirstLetter(payload[1]),
                 amountSpent: payload[2],//exports.message_values.spent,
                 day: date.getDate(),
-                month: moment(date.getMonth() + 1),
+                month: moment(date.getMonth() + 1).format('MM'),
                 year: date.getFullYear(),
                 description: ''
             });
