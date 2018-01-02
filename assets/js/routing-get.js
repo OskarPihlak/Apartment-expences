@@ -7,6 +7,7 @@ module.exports = (app) => {
     let month_selection = helpers.generate_month_selections();
     let dates = helpers.date_now();
     let request = require('request');
+    let date = new Date();
 
     app.get('/', function (req, res) {
         res.redirect('/' + dates.year + '-' + dates.month);
@@ -76,7 +77,7 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? {name: ${message[0]}, date: ${dates.day_number}-${dates.month_number}-${dates.year}, amount: ${message[1]}}`,
+                        "text": `Is this info correct ? {name: ${message[0]}, date: ${date.getDate()} - ${moment(date.getMonth()+1).format('MM')} - ${date.getFullYear()}, amount: ${message[1]}}`,
                         "buttons": [
                             {
                                 "type": "postback",
@@ -147,7 +148,7 @@ module.exports = (app) => {
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { date ${date.getDate()}. ${moment(date.getMonth()+1).format('MMMM')} - ${date.getFullYear()}}`};
+            response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth()+1).format('MMMM')} - ${date.getFullYear()}}`};
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
