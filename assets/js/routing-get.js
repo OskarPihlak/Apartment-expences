@@ -67,9 +67,34 @@ module.exports = (app) =>{
             if((received_message.text).startsWith('#')){
             let message = (received_message.text).slice(1).split('-');
 
+
                 response = {
-                    "text": `Name:${message[0]}, Time:${message[1]} and  Amount: ${message[2]}"!`
-                }
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "generic",
+                            "elements": [{
+                                "title": "Is this info correct?",
+                                "subtitle": "Tap a button to answer.",
+                                "text": `{name: ${message[0]}, 
+                                          date: ${message[1]},
+                                          amount: ${message[2]}}`,
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "Yes!",
+                                        "payload": "yes",
+                                    },
+                                    {
+                                        "type": "postback",
+                                        "title": "No!",
+                                        "payload": "no",
+                                    }
+                                ],
+                            }]
+                        }
+                    }
+                };
             } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
