@@ -65,8 +65,9 @@ module.exports = (app) =>{
         // Checks if the message contains text
         console.log(received_message.text);
             if((received_message.text).startsWith('#')){
+
                 response = {
-                    "text": `You sent: "${received_message.text}"!`
+                    "text": `You sent: "${(received_message.text).slice(1)}"!`
                 }
             } else if (received_message.text) {
             // Create the payload for a basic text message, which
