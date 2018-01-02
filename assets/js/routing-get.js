@@ -149,23 +149,6 @@ module.exports = (app) => {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
             response = {"text": `Very good, pushing to server { date ${dates.day_number}-${dates.month_number}-${dates.year}}`};
-            let financeRecord = new db.finance({
-                name: helpers.capitalizeFirstLetter(req.body.name),
-                amountSpent: req.body.amount,
-                day: dates.day_number,
-                month: days.month_number,
-                year: days.year,
-                description: (req.body.description).toLowerCase()
-            });
-            /*financeRecord.save().then(function (err, post) {
-                if (err) {
-                    return (err)
-                }
-            }).catch(err => {
-                throw err
-            });*/
-
-
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
