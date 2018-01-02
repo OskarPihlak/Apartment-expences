@@ -131,6 +131,7 @@ module.exports = (app) => {
         }
 
         // Send the response message
+        console.log(response)
         callSendAPI(sender_psid, response);
 
     }
@@ -199,6 +200,7 @@ console.log(exports.message_values);
                 console.error("Unable to send message:" + err);
             }
         });
+        console.log('callSendAPI response' + JSON.stringify(response));
     }
 
 
