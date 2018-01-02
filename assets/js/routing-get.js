@@ -151,7 +151,7 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
-            response = {"text": `Very good, pushing to server ${payload[1]}  /  ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[2]} €`};
+            response = {"text": `Very good, pushing to server:  ${payload[1]} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[2]} €`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(payload[1]),
                 amountSpent: payload[2],//exports.message_values.spent,
@@ -159,6 +159,13 @@ module.exports = (app) => {
                 month: moment(date.getMonth() + 1),
                 year: date.getFullYear(),
                 description: ''
+            });
+            financeRecord.save().then(function (err, post) {
+                if (err) {
+                    return (err)
+                }
+            }).catch(err => {
+                throw err
             });
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
