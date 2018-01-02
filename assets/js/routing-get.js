@@ -195,12 +195,13 @@ console.log(exports.message_values);
             "json": request_body
         }, (err, res, body) => {
             if (!err) {
-                console.log('message sent!')
+                console.log('message sent!');
+                console.log('callSendAPI response' + JSON.stringify(response));
             } else {
                 console.error("Unable to send message:" + err);
             }
         });
-        console.log('callSendAPI response' + JSON.stringify(response));
+
     }
 
 
