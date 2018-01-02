@@ -186,8 +186,8 @@ module.exports = (app) => {
             let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
             db.finance.find(query_string).then(result => {
                 let build_main = helpers.build_main_object(result);
-                response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}
-                Oskar: ${build_main.people.oskar.precentage}, ${build_main.people.oskar.spent}`};
+                console.log(build_main.people.oskar.precentage);
+                response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
             });
 
         } else if (payload[0] === 'bad') {
