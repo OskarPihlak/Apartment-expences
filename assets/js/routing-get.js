@@ -82,7 +82,7 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload":"good",
+                                "payload":"good,"+message[0]+","+message[1]
                             },
                             {
                                 "type": "postback",
