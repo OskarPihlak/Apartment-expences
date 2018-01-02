@@ -79,12 +79,12 @@ module.exports = (app) => {
                         "text": `Is this info correct ? {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`,
                         "buttons": [
                             {
-                                "type": "postback",
+                                "type": "awnser_verification",
                                 "title": "Yes!",
                                 "payload": "yes",
                             },
                             {
-                                "type": "postback",
+                                "type": "awnser_verification",
                                 "title": "No!",
                                 "payload": "no",
                             }
@@ -112,12 +112,12 @@ module.exports = (app) => {
                             "image_url": attachment_url,
                             "buttons": [
                                 {
-                                    "type": "awnser_verification",
+                                    "type": "postback",
                                     "title": "Yes!",
                                     "payload": "yes",
                                 },
                                 {
-                                    "type": "awnser_verification",
+                                    "type": "postback",
                                     "title": "No!",
                                     "payload": "no",
                                 }
