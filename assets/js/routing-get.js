@@ -65,7 +65,8 @@ module.exports = (app) => {
     // Handles messages events
     function handleMessage(sender_psid, received_message) {
         let response;
-
+        if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
+        console.log('handlemessages///////////////////////'+sender_id_name);
         // Checks if the message contains text
         console.log('handle message ' + received_message.text);
         if ((received_message.text).startsWith('#')) {
@@ -77,12 +78,12 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? ${message[0]} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[1]} €`,
+                        "text": `Is this info correct ? ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[0]} €`,
                         "buttons": [
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload":"good,"+message[0]+","+message[1]
+                                "payload":"good,"+message[0]
                             },
                             {
                                 "type": "postback",
@@ -139,9 +140,8 @@ module.exports = (app) => {
 // Handles messaging_postbacks events
     function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
-        if (sender_psid == 1657207370991802){  sender_psid= 'Oskar'}
-        else {sender_psid = webhook_event.sender.id;}
-        console.log('PSID SENDER'+sender_psid);
+        if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
+        console.log('PSID SENDER'+ sender_id_name);
         console.log('postback ///////////////////////////////////// '+received_postback);
         let date = new Date();
         let response;
@@ -154,7 +154,7 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
-            response = {"text": `Very good, pushing to server:  ${payload[1]} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[2]} €`};
+            response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(payload[1]),
                 amountSpent: payload[2],
