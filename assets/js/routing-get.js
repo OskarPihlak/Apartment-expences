@@ -65,7 +65,7 @@ module.exports = (app) =>{
     app.get('/webhook', (req, res) => {
 
         // Your verify token. Should be a random string.
-        let VERIFY_TOKEN = "EAAH0ZBiD0bXEBANmyQ2I3QRmTIiaf79QZBn7OvJhZCE7ZCyz1Q3ZCybWz9tE4g8cBrtXmZC2DU01bd3PfWCVlPFvewCvTS28cOFEqRCZCaBphGOjNyVgZCLEiaUnYTt9v9oALqrNZC652FhZCE7ZC0jt7K2BkweF0KbiyZAaex8O0ukYUQZDZD";
+        let VERIFY_TOKEN = "ourApartmentStuff";
 
         // Parse the query params
         let mode = req.query['hub.mode'];
