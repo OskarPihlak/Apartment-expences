@@ -140,7 +140,7 @@ module.exports = (app) => {
         let response;
         let message = (received_message.text).slice(1).split('-');
         console.log(message[0]);
-
+console.log(dates.day_number);
         // Get the payload for the postback
         let payload = received_postback.payload;
         let dates = helpers.generate_month_selections();
