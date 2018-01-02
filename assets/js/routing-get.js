@@ -214,7 +214,7 @@ console.log(dates.day_number);
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
-                console.log('entry' + entry);
+                console.log('entry' + JSON.stringify(entry));
                 console.log('webhook event ' + webhook_event);
                 console.log('webhook messages' +webhook_event.message);
 
@@ -224,11 +224,11 @@ console.log(dates.day_number);
 
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
-                if (webhook_event.message) {
+
                     handleMessage(sender_psid, webhook_event.message);
-                } else if (webhook_event.postback) {
+
                     handlePostback(sender_psid, (webhook_event.postback), (webhook_event.message));
-                }
+
             });
 
             // Return a '200 OK' response to all events
