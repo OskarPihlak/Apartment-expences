@@ -61,5 +61,12 @@ module.exports = (app) =>{
             });
         }).catch(err => {throw err });
     });
+    app.get('/webhook', (req, res)=>{
+        if(req.query['hub.verify_token'] === 'iz_our_apartment_expence_stuff'){
+            res.send(req.query['hub.challenge']);
+        }
+        res.send('Wrong token');
+    });
+
 
 };
