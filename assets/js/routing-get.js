@@ -136,19 +136,18 @@ module.exports = (app) => {
     function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
         console.log(received_postback);
-
+        let date = new Date();
         let response;
 
         // Get the payload for the postback
         let payload = received_postback.payload;
-        let dates = helpers.date_now();
         // Set the response based on the postback payload
         if (payload === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { date ${dates.day}-${dates.month}-${dates.year}}`};
+            response = {"text": `Very good, pushing to server { date ${date.getDate()} - ${(date.getMonth()+1)} - ${dates.getFullYear()}}`};
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
