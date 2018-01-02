@@ -70,7 +70,7 @@ module.exports = (app) => {
         // Checks if the message contains text
         console.log('handle message ' + received_message.text);
         if (((received_message.text).toUpperCase()).startsWith('X')) {
-            let message = (received_message.text).slice(1).split('.');
+            let message = (received_message.text).slice(1).split(' and ');
 
 
             response = {
