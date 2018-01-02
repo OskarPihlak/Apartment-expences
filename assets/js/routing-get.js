@@ -93,6 +93,7 @@ module.exports = (app) => {
                     }
                 }
             };
+           module.exports.message_values = {name: message[0], spent: message[1]}
         } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
@@ -131,6 +132,7 @@ module.exports = (app) => {
 
         // Send the response message
         callSendAPI(sender_psid, response);
+
     }
 
 // Handles messaging_postbacks events
@@ -149,6 +151,22 @@ module.exports = (app) => {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
             response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth()+1).format('MMMM')} - ${date.getFullYear()}}`};
+            let financeRecord = new db.finance({
+                name: helpers.capitalizeFirstLetter(exports.message_values.name),
+                amountSpent: exports.message_values.spent,
+                day: date.getDate(),
+                month: moment(date.getMonth()+1),
+                year: date.getFullYear(),
+                description: ''
+            });
+/*            financeRecord.save().then(function (err, post) {
+                if (err) {
+                    return (err)
+                }
+            }).catch(err => {
+                throw err
+            });
+            */
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
