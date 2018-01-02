@@ -141,7 +141,7 @@ module.exports = (app) => {
         console.log(received_postback);
         let date = new Date();
         let response;
-
+console.log(exports.message_values);
         // Get the payload for the postback
         let payload = received_postback.payload;
         // Set the response based on the postback payload
@@ -159,7 +159,7 @@ module.exports = (app) => {
                 year: date.getFullYear(),
                 description: ''
             });
-            let lol = handleMessage().message[0];
+
             console.log(lol);
             /*            financeRecord.save().then(function (err, post) {
                             if (err) {
@@ -225,6 +225,7 @@ module.exports = (app) => {
                 // pass the event to the appropriate handler function
                 if (webhook_event.message) {
                     console.log(JSON.stringify(webhook_event));
+                    module.exports.webhook_message = webhook_event.message;
                     handleMessage(sender_psid, webhook_event.message);
                 }else if (webhook_event.postback) {
                         handlePostback(sender_psid, webhook_event.postback);
