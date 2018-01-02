@@ -82,12 +82,12 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload":{"status":"good"},
+                                "payload":["good","lol"],
                             },
                             {
                                 "type": "postback",
                                 "title": "No!",
-                                "payload": {"status":"bad"},
+                                "payload": ["bad","lol"],
                             }
                         ],
                     }
@@ -116,12 +116,12 @@ module.exports = (app) => {
                                 {
                                     "type": "postback",
                                     "title": "Yes!",
-                                    "payload": {"status":"yes"},
+                                    "payload": ["yes","lol"],
                                 },
                                 {
                                     "type": "postback",
                                     "title": "No!",
-                                    "payload": {"status":"no"},
+                                    "payload": ["no","lol"],
                                 }
                             ],
                         }]
