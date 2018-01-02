@@ -10,6 +10,19 @@ module.exports = (app) => {
     let request = require('request');
     let date = new Date();
 
+
+    let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
+    db.finance.find(query_string).then(result => {
+        let build_main = helpers.build_main_object(result);
+        console.log(result);
+        console.log(build_main.people.oskar.precentage, build_main.people.oskar.spent);
+        console.log(build_main.people.sandra.precentage, build_main.people.sandra.spent);
+        console.log(build_main.people.uibo.precentage, build_main.people.uibo.spent);
+        console.log(build_main.people.luiza.precentage, build_main.people.luiza.spent);
+    });
+
+
+
     app.get('/', function (req, res) {
         res.redirect('/' + dates.year + '-' + dates.month);
     });
@@ -155,7 +168,6 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
-            response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(sender_id_name),
                 amountSpent: payload[1],
@@ -164,12 +176,6 @@ module.exports = (app) => {
                 year: date.getFullYear(),
                 description: payload[2].toLowerCase()
             });
-            console.log(helpers.capitalizeFirstLetter(sender_id_name));
-            console.log(payload[1]);
-            console.log(date.getDate());
-            console.log(date.getMonth() + 1);
-            console.log(date.getFullYear());
-            console.log(payload[2]);
             financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
@@ -177,6 +183,13 @@ module.exports = (app) => {
             }).catch(err => {
                 throw err
             });
+            let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
+            db.finance.find(query_string).then(result => {
+                let build_main = helpers.build_main_object(result);
+                response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}
+                Oskar: ${build_main.people.oskar.precentage}, ${build_main.people.oskar.spent}`};
+            });
+
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }

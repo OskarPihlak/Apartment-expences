@@ -73,6 +73,8 @@ module.exports.build_main_object = (result)=> {
     return {array: dateObjectArray, people: people};
 };
 
+
+
 module.exports.generate_month_selections = ()=>{
     let month_difference_array = [];
     let date = new Date();
