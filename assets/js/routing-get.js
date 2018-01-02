@@ -133,14 +133,12 @@ module.exports = (app) => {
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback, received_message) {
+    function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
         console.log(received_postback);
-        console.log(received_message);
+
         let response;
-        let message = (received_message.text).slice(1).split('-');
-        console.log(message[0]);
-console.log(dates.day_number);
+
         // Get the payload for the postback
         let payload = received_postback.payload;
         let dates = helpers.generate_month_selections();
@@ -150,7 +148,7 @@ console.log(dates.day_number);
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server {name: ${message[0]}, amount: ${message[1]}, date ${dates.day_number}-${dates.month_number}-${dates.year}`};
+            response = {"text": `Very good, pushing to server { date ${dates.day_number}-${dates.month_number}-${dates.year}}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(req.body.name),
                 amountSpent: req.body.amount,
@@ -214,9 +212,6 @@ console.log(dates.day_number);
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
-                console.log('entry' + JSON.stringify(entry));
-                console.log('webhook event ' + JSON.stringify(webhook_event));
-                console.log('webhook messages' +webhook_event.message);
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
@@ -224,10 +219,13 @@ console.log(dates.day_number);
 
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
+
                 if (webhook_event.message) {
-                    handleMessage(sender_psid, webhook_event.message);
+                    console.log(JSON.stringify(webhook_event));
+                    handleMessage(sender_psid, webhook_event.message)
+
                 } else if (webhook_event.postback) {
-                    handlePostback(sender_psid, (webhook_event.postback), (webhook_event.message));
+                    handlePostback(sender_psid, (webhook_event.postback));
                 }
             });
 
