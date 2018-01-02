@@ -154,13 +154,13 @@ module.exports = (app) => {
                 year: days.year,
                 description: (req.body.description).toLowerCase()
             });
-            financeRecord.save().then(function (err, post) {
+            /*financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
                 }
             }).catch(err => {
                 throw err
-            });
+            });*/
 
 
         } else if (payload === 'bad') {
