@@ -129,26 +129,45 @@ module.exports = (app) => {
         }
 
         // Send the response message
-        callSendAPI(sender_psid, response);
+        callSendAPI(sender_psid, response, received_message);
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback) {
+    function handlePostback(sender_psid, received_postback, received_message) {
         let response;
-
+        let message = (received_message.text).slice(1).split('-');
         // Get the payload for the postback
         let payload = received_postback.payload;
 
         // Set the response based on the postback payload
-        switch(payload){
+        switch (payload) {
             case 'yes':
-                response = {"text": "Thanks, pushing to server!"}; break;
+                response = {"text": "Thanks, pushing to server!"};
+                break;
             case 'no':
-                response = {"text": "Oops, try sending it again."}; break;
+                response = {"text": "Oops, try sending it again."};
+                break;
             case 'good-query':
-                response = {"text": "Nice, sending data to server!"}; break;
+                response = {"text": `Nice, sending data to server! {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`};
+                break;
+                let financeRecord = new db.finance({
+                    name: helpers.capitalizeFirstLetter(message[0]),
+                    amountSpent: message[2],
+                    /*day: day,
+                    month: month,
+                    year: year,
+                    description: (req.body.description).toLowerCase()*/
+                });
+            /* financeRecord.save().then(function (err, post) {
+                 if (err) {
+                     return (err)
+                 }
+             }).catch(err => {
+                 throw err
+             });*/
             case 'bad-query':
-                response = {"text": "Okay, try sending it again"}; break;
+                response = {"text": "Okay, try sending it again"};
+                break;
         }
         // Send the message to acknowledge the postback
         callSendAPI(sender_psid, response);
