@@ -82,7 +82,7 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload": {payload:"good", name:message[0]},
+                                "payload": "good",
                             },
                             {
                                 "type": "postback",
@@ -142,7 +142,7 @@ module.exports = (app) => {
         let response;
 console.log(exports.message_values);
         // Get the payload for the postback
-        let payload = received_postback.payload.payload;
+        let payload = received_postback.payload;
         // Set the response based on the postback payload
         if (payload === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
