@@ -67,7 +67,7 @@ module.exports = (app) => {
         let response;
 
         // Checks if the message contains text
-        console.log('handle message '+received_message.text);
+        console.log('handle message ' + received_message.text);
         if ((received_message.text).startsWith('#')) {
             let message = (received_message.text).slice(1).split('-');
 
@@ -77,7 +77,7 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? ${message[0]} / ${date.getDate()}. ${moment(date.getMonth()+1).format('MMMM')} - ${date.getFullYear()} / ${message[1]} €`,
+                        "text": `Is this info correct ? ${message[0]} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${message[1]} €`,
                         "buttons": [
                             {
                                 "type": "postback",
@@ -93,7 +93,7 @@ module.exports = (app) => {
                     }
                 }
             };
-           module.exports.message_values = {name: message[0], spent: message[1]}
+            module.exports.message_values = {name: message[0], spent: message[1]}
         } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
@@ -136,7 +136,7 @@ module.exports = (app) => {
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback) {
+    function handlePostback(sender_psid, received_postback, recieved_messages) {
         console.log(sender_psid);
         console.log(received_postback);
         let date = new Date();
@@ -150,23 +150,24 @@ module.exports = (app) => {
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth()+1).format('MMMM')} - ${date.getFullYear()}}`};
+            response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
             let financeRecord = new db.finance({
-                name: helpers.capitalizeFirstLetter(exports.message_values.name),
-                amountSpent: exports.message_values.spent,
+                name: helpers.capitalizeFirstLetter(''),
+                amountSpent: '',//exports.message_values.spent,
                 day: date.getDate(),
-                month: moment(date.getMonth()+1),
+                month: moment(date.getMonth() + 1),
                 year: date.getFullYear(),
                 description: ''
             });
-/*            financeRecord.save().then(function (err, post) {
-                if (err) {
-                    return (err)
-                }
-            }).catch(err => {
-                throw err
-            });
-            */
+            console.log()
+            /*            financeRecord.save().then(function (err, post) {
+                            if (err) {
+                                return (err)
+                            }
+                        }).catch(err => {
+                            throw err
+                        });
+                        */
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
@@ -208,7 +209,7 @@ module.exports = (app) => {
         if (body.object === 'page') {
 
             // Iterate over each entry - there may be multiple if batched
-            body.entry.forEach(function(entry) {
+            body.entry.forEach(function (entry) {
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
@@ -224,8 +225,9 @@ module.exports = (app) => {
                 if (webhook_event.message) {
                     console.log(JSON.stringify(webhook_event));
                     handleMessage(sender_psid, webhook_event.message);
-                } else if (webhook_event.postback) {
-                    handlePostback(sender_psid, webhook_event.postback);
+                    if (webhook_event.postback) {
+                        handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
+                    }
                 }
 
             });
