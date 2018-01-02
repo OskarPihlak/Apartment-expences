@@ -79,14 +79,14 @@ module.exports = (app) => {
                         "text": `Is this info correct ? {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`,
                         "buttons": [
                             {
-                                "type": "awnser_verification",
+                                "type": "postback",
                                 "title": "Yes!",
-                                "payload": "yes",
+                                "payload": "good-query",
                             },
                             {
-                                "type": "awnser_verification",
+                                "type": "postback",
                                 "title": "No!",
-                                "payload": "no",
+                                "payload": "bad-query",
                             }
                         ],
                     }
@@ -140,26 +140,15 @@ module.exports = (app) => {
         let payload = received_postback.payload;
 
         // Set the response based on the postback payload
-        if (payload === 'yes') {
-            response = {"text": "Thanks!"}
-        } else if (payload === 'no') {
-            response = {"text": "Oops, try sending another image."}
-        }
-        // Send the message to acknowledge the postback
-        callSendAPI(sender_psid, response);
-    }
-
-    function handlePostbackVerification(sender_psid, received_postback) {
-        let response;
-
-        // Get the payload for the postback
-        let payload = received_postback.payload;
-
-        // Set the response based on the postback payload
-        if (payload === 'yes') {
-            response = {"text": "Thanks pushing to server!"}
-        } else if (payload === 'no') {
-            response = {"text": "Oops, try sending it again."}
+        switch(payload){
+            case 'yes':
+                response = {"text": "Thanks, pushing to server!"}; break;
+            case 'no':
+                response = {"text": "Oops, try sending it again."}; break;
+            case 'good-query':
+                response = {"text": "Nice, sending data to server!"}; break;
+            case 'bad-query':
+                response = {"text": "Okay, try sending it again"}; break;
         }
         // Send the message to acknowledge the postback
         callSendAPI(sender_psid, response);
@@ -217,8 +206,6 @@ module.exports = (app) => {
                     handleMessage(sender_psid, webhook_event.message);
                 } else if (webhook_event.postback) {
                     handlePostback(sender_psid, webhook_event.postback);
-                } else if (webhook_event.awnser_verification) {
-                    handlePostbackVerification(sender_psid, webhook_event.awnser_verification);
                 }
             });
 
