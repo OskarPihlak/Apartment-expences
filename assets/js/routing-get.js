@@ -76,9 +76,8 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `{name: ${message[0]}, 
-                                          date: ${message[1]},
-                                          amount: ${message[2]}}`,
+                        "text": `Is this info correct ?
+                         {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`,
                         "buttons": [
                             {
                                 "type": "postback",
