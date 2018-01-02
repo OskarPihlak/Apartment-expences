@@ -66,7 +66,7 @@ module.exports = (app) => {
         let response;
 
         // Checks if the message contains text
-        console.log(received_message.text);
+        console.log('handle message '+received_message.text);
         if ((received_message.text).startsWith('#')) {
             let message = (received_message.text).slice(1).split('-');
 
@@ -129,7 +129,7 @@ module.exports = (app) => {
         }
 
         // Send the response message
-        callSendAPI(sender_psid, response, received_message);
+        callSendAPI(sender_psid, response);
     }
 
 // Handles messaging_postbacks events
@@ -227,7 +227,7 @@ console.log(dates.day_number);
                 if (webhook_event.message) {
                     handleMessage(sender_psid, webhook_event.message);
                 } else if (webhook_event.postback) {
-                    handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
+                    handlePostback(sender_psid, (webhook_event.postback), (webhook_event.message));
                 }
             });
 
