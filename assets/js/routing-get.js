@@ -134,6 +134,9 @@ module.exports = (app) => {
 
 // Handles messaging_postbacks events
     function handlePostback(sender_psid, received_postback, received_message) {
+        console.log(sender_psid);
+        console.log(received_postback);
+        console.log(received_message);
         let response;
         let message = (received_message.text).slice(1).split('-');
         // Get the payload for the postback
@@ -221,6 +224,8 @@ module.exports = (app) => {
                 if (webhook_event.message) {
                     handleMessage(sender_psid, webhook_event.message);
                 } else if (webhook_event.postback) {
+                    console.log(webhook_event);
+                    console.log(webhook_event.message);
                     handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
                 }
             });
