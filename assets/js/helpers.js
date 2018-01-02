@@ -1,5 +1,7 @@
 const Handlebars = require('handlebars');
 const moment = require('moment');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 module.exports.math = Handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
@@ -97,7 +99,8 @@ module.exports.pad = function pad(n, width, z) {
 };
 module.exports.sendText = (sender, text)=>{
     let token = 'EAAH0ZBiD0bXEBADiJ9hb8TJ6iW9USCTCmO0vXBL8YzBBCfOoNIduyfqe8b7eBUxfPjYmtXqXCefi2L4Inb7E9rSsr5JfHN8dFm3EIKhiELBcnG0Aslz88rJGHb8BZAZAPBYKbbDAdAOs66p1LMAFj7G1y9AQPbJwQZBlDZBV5GgZDZD';
-  let messageData = {text: text}
+  let messageData = {text: text};
+
   request({
       url:'https://graph.facebook.com/v2.6/me/messages',
       qs:{access_token : token},

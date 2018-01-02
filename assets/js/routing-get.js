@@ -1,15 +1,11 @@
 module.exports = (app) =>{
     const db = require('./db.js');
+    const express = require('express');
+    const bodyParser = require('body-parser');
     const helpers = require('./helpers.js');
     const moment = require('moment');
     let month_selection = helpers.generate_month_selections();
     let dates = helpers.date_now();
-    let s = {};
-    let v = {'month':'1', 'year':'2'};
-    db.finance.find(s).then(result => {
-       console.log(result);
-    });
-
 
     app.get('/', function (req, res) {
         res.redirect('/' + dates.year +'-'+ dates.month);
@@ -61,51 +57,50 @@ module.exports = (app) =>{
             });
         }).catch(err => {throw err });
     });
-    // Adds support for GET requests to our webhook
-    app.get('/bot/webhook', (req, res) => {
+    // Handles messages events
+    function handleMessage(sender_psid, received_message) {
 
-        // Your verify token. Should be a random string.
-        let VERIFY_TOKEN = "ourApartmentStuff";
+    }
 
-        // Parse the query params
-        //let mode = req.query['hub.mode'];
-        let token = req.query['hub.verify_token'];
-        let challenge = req.query['hub.challenge'];
+// Handles messaging_postbacks events
+    function handlePostback(sender_psid, received_postback) {
 
-            // Checks the mode and token sent is correct
-            if (token === VERIFY_TOKEN) {
+    }
 
-                // Responds with the challenge token from the request
-                console.log('WEBHOOK_VERIFIED');
-                res.status(200).send(challenge);
+// Sends response messages via the Send API
+    function callSendAPI(sender_psid, response) {
 
-            } else {
-                // Responds with '403 Forbidden' if verify tokens do not match
-                res.sendStatus(403);
-            }
-    });
+    }
 
-    // Creates the endpoint for our webhook
     app.post('/bot/webhook', (req, res) => {
 
-            // Iterates over each entry - there may be multiple if batched
-let messaging_events = req.body.entry[0].messaging;
-console.log(req.body.entry[0].messaging[0]);
-console.log(req.body.entry[0].messaging[0].message);
-for(let i=0;i<messaging_events.length;i++) {
-    let event = messaging_events[i];
-    let sender = event.sender.id;
-    if (event.message && event.message.text) {
-        let text = event.message.text;
-        helpers.sendText(sender, "Text Echo: " + text.substring(0, 100))
-    }
-}
+        // Parse the request body from the POST
+        let body = req.body;
 
-            // Returns a '200 OK' response to all requests
+        // Check the webhook event is from a Page subscription
+        if (body.object === 'page') {
+
+            // Iterate over each entry - there may be multiple if batched
+            body.entry.forEach(function(entry) {
+
+                // Gets the body of the webhook event
+                let webhook_event = entry.messaging[0];
+                console.log(webhook_event);
+
+                // Get the sender PSID
+                let sender_psid = webhook_event.sender.id;
+                console.log('Sender PSID: ' + sender_psid);
+
+            });
+
+            // Return a '200 OK' response to all events
             res.status(200).send('EVENT_RECEIVED');
 
+        } else {
+            // Return a '404 Not Found' if event is not from a page subscription
+            res.sendStatus(404);
+        }
 
     });
-
 
 };
