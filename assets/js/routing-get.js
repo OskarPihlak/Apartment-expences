@@ -133,9 +133,9 @@ module.exports = (app) => {
     }
 
 // Handles messaging_postbacks events
-    function handlePostback(sender_psid, received_postback) {
+    function handlePostback(sender_psid, received_postback, received_message) {
         let response;
-
+        let message = (received_message.text).slice(1).split('-');
         // Get the payload for the postback
         let payload = received_postback.payload;
         let dates = helpers.generate_month_selections();
@@ -221,7 +221,7 @@ module.exports = (app) => {
                 if (webhook_event.message) {
                     handleMessage(sender_psid, webhook_event.message);
                 } else if (webhook_event.postback) {
-                    handlePostback(sender_psid, webhook_event.postback);
+                    handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
                 }
             });
 
