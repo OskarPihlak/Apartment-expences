@@ -93,6 +93,7 @@ module.exports = (app) => {
                     }
                 }
             };
+            console.log(response);
         } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
@@ -137,7 +138,7 @@ module.exports = (app) => {
 // Handles messaging_postbacks events
     function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
-        console.log(received_postback);
+        console.log('postback ///////////////////////////////////// '+received_postback);
         let date = new Date();
         let response;
 console.log(exports.message_values);
