@@ -150,21 +150,6 @@ module.exports = (app) => {
             case 'good-query':
                 response = {"text": `Nice, sending data to server! {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`};
                 break;
-                let financeRecord = new db.finance({
-                    name: helpers.capitalizeFirstLetter(message[0]),
-                    amountSpent: message[2],
-                    /*day: day,
-                    month: month,
-                    year: year,
-                    description: (req.body.description).toLowerCase()*/
-                });
-            /* financeRecord.save().then(function (err, post) {
-                 if (err) {
-                     return (err)
-                 }
-             }).catch(err => {
-                 throw err
-             });*/
             case 'bad-query':
                 response = {"text": "Okay, try sending it again"};
                 break;
