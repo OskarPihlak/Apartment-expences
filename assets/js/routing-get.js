@@ -214,6 +214,7 @@ console.log(dates.day_number);
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
+                console.log('entry' + entry);
                 console.log('webhook event ' + webhook_event);
                 console.log('webhook messages' +webhook_event.message);
 
