@@ -82,12 +82,12 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload": "good",
+                                "payload":{"status":"good"},
                             },
                             {
                                 "type": "postback",
                                 "title": "No!",
-                                "payload": "bad",
+                                "payload": {"status":"bad"},
                             }
                         ],
                     }
@@ -115,12 +115,12 @@ module.exports = (app) => {
                                 {
                                     "type": "postback",
                                     "title": "Yes!",
-                                    "payload": "yes",
+                                    "payload": {"status":"yes"},
                                 },
                                 {
                                     "type": "postback",
                                     "title": "No!",
-                                    "payload": "no",
+                                    "payload": {"status":"no"},
                                 }
                             ],
                         }]
@@ -144,11 +144,11 @@ console.log(exports.message_values);
         // Get the payload for the postback
         let payload = received_postback.payload;
         // Set the response based on the postback payload
-        if (payload === 'yes') {
+        if (payload.status === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
-        } else if (payload === 'no') {
+        } else if (payload.status === 'no') {
             response = {"text": "Oops, try sending it again."}
-        } else if (payload === 'good') {
+        } else if (payload.status === 'good') {
             response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(''),
@@ -168,7 +168,7 @@ console.log(exports.message_values);
                             throw err
                         });
                         */
-        } else if (payload === 'bad') {
+        } else if (payload.status === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
         // Send the message to acknowledge the postback
