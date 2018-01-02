@@ -129,7 +129,7 @@ module.exports = (app) => {
         }
 
         // Send the response message
-        callSendAPI(sender_psid, response);
+        callSendAPI(sender_psid, response, received_message);
     }
 
 // Handles messaging_postbacks events
@@ -214,8 +214,8 @@ module.exports = (app) => {
 
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
-                console.log(webhook_event);
-
+                console.log('webhook event ' + webhook_event);
+                console.log('webhook messages' +webhook_event.message);
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
@@ -226,8 +226,6 @@ module.exports = (app) => {
                 if (webhook_event.message) {
                     handleMessage(sender_psid, webhook_event.message);
                 } else if (webhook_event.postback) {
-                    console.log(webhook_event);
-                    console.log(webhook_event.message);
                     handlePostback(sender_psid, webhook_event.postback, webhook_event.message);
                 }
             });
