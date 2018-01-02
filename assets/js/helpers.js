@@ -95,3 +95,21 @@ module.exports.pad = function pad(n, width, z) {
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
+module.exports.sendText = (sender, text)=>{
+    token = 'EAAH0ZBiD0bXEBADiJ9hb8TJ6iW9USCTCmO0vXBL8YzBBCfOoNIduyfqe8b7eBUxfPjYmtXqXCefi2L4Inb7E9rSsr5JfHN8dFm3EIKhiELBcnG0Aslz88rJGHb8BZAZAPBYKbbDAdAOs66p1LMAFj7G1y9AQPbJwQZBlDZBV5GgZDZD';
+  let messageData = {text: text};
+  request({
+      url:'',
+      ql:{acess_token:token},
+      method: "POST",
+      receipt:{id: sender},
+      message: messageData
+  }, (error, reesponse, body)=>{
+      if(error){
+          console.log('sending error');
+      }else if(response.body.error){
+          console.log('response body error');
+      }
+    })
+
+};

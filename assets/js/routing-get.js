@@ -87,7 +87,6 @@ module.exports = (app) =>{
 
     // Creates the endpoint for our webhook
     app.post('/bot/webhook', (req, res) => {
-
         let body = req.body;
 
         // Checks this is an event from a page subscription
@@ -99,6 +98,11 @@ module.exports = (app) =>{
                 // Gets the message. entry.messaging is an array, but
                 // will only ever contain one message, so we get index 0
                 let webhookEvent = entry.messaging[0];
+                let sender = event.sender.id;
+                if(event.message && event.message.text){
+                    let text = event.message.text;
+                    helpers.sendText(sender,"Text Echo: " + text.substring(0,100))
+                }
                 console.log(webhookEvent);
             });
 
