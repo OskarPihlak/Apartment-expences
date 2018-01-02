@@ -166,13 +166,13 @@ module.exports = (app) => {
             console.log(date.getMonth() + 1);
             console.log(date.getFullYear());
             console.log('');
-            financeRecord.save().then(function (err, post) {
+           /* financeRecord.save().then(function (err, post) {
                 if (err) {
                     return (err)
                 }
             }).catch(err => {
                 throw err
-            });
+            });*/
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
@@ -225,7 +225,8 @@ module.exports = (app) => {
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
-                if (sender_psid === 1657207370991802){ sender_psid= 'Oskar'}
+                if (sender_psid === 1657207370991802){ let sender_psid= 'Oskar'}
+                else {let sender_psid = webhook_event.sender.id;}
                 console.log('Sender PSID: ' + sender_psid);
 
                 // Check if the event is a message or postback and
