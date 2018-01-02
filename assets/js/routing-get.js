@@ -147,7 +147,7 @@ module.exports = (app) => {
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { date ${date.getDate()} - ${(date.getMonth()+1)} - ${dates.getFullYear()}}`};
+            response = {"text": `Very good, pushing to server { date ${date.getDate()} - ${(date.getMonth()+1)} - ${date.getFullYear()}}`};
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
