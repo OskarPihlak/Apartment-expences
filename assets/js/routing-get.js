@@ -82,12 +82,12 @@ module.exports = (app) => {
                             {
                                 "type": "postback",
                                 "title": "Yes!",
-                                "payload":["good","lol"],
+                                "payload":"good",
                             },
                             {
                                 "type": "postback",
                                 "title": "No!",
-                                "payload": ["bad","lol"],
+                                "payload": "bad",
                             }
                         ],
                     }
@@ -116,12 +116,12 @@ module.exports = (app) => {
                                 {
                                     "type": "postback",
                                     "title": "Yes!",
-                                    "payload": ["yes","lol"],
+                                    "payload": "yes",
                                 },
                                 {
                                     "type": "postback",
                                     "title": "No!",
-                                    "payload": ["no","lol"],
+                                    "payload": "no",
                                 }
                             ],
                         }]
@@ -131,7 +131,7 @@ module.exports = (app) => {
         }
 
         // Send the response message
-        console.log(response)
+        console.log(response);
         callSendAPI(sender_psid, response);
 
     }
@@ -146,11 +146,11 @@ console.log(exports.message_values);
         // Get the payload for the postback
         let payload = received_postback.payload;
         // Set the response based on the postback payload
-        if (payload.status === 'yes') {
+        if (payload === 'yess') {
             response = {"text": "Thanks, pushing to server!"}
-        } else if (payload.status === 'no') {
+        } else if (payload === 'nooo') {
             response = {"text": "Oops, try sending it again."}
-        } else if (payload.status === 'good') {
+        } else if (payload === 'good') {
             response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(''),
@@ -160,17 +160,7 @@ console.log(exports.message_values);
                 year: date.getFullYear(),
                 description: ''
             });
-
-
-            /*            financeRecord.save().then(function (err, post) {
-                            if (err) {
-                                return (err)
-                            }
-                        }).catch(err => {
-                            throw err
-                        });
-                        */
-        } else if (payload.status === 'bad') {
+        } else if (payload === 'badd') {
             response = {"text": "Oops, try sending it again."}
         }
         // Send the message to acknowledge the postback
