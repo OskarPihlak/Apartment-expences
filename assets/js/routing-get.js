@@ -83,6 +83,8 @@ module.exports = (app) => {
                                 "type": "postback",
                                 "title": "Yes!",
                                 "payload": "good",
+                                "name":message[0],
+                                "spent":message[1]
                             },
                             {
                                 "type": "postback",
@@ -93,7 +95,6 @@ module.exports = (app) => {
                     }
                 }
             };
-            module.exports.message_values = {name: message[0], spent: message[1]}
         } else if (received_message.text) {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
