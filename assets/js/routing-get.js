@@ -142,16 +142,16 @@ module.exports = (app) => {
         console.log('postback ///////////////////////////////////// '+received_postback);
         let date = new Date();
         let response;
-console.log(exports.message_values);
+
         // Get the payload for the postback
-        let payload = received_postback.payload;
+        let payload = received_postback.payload.split(',');
         // Set the response based on the postback payload
-        if (payload === 'yess') {
+        if (payload[0] === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
-        } else if (payload === 'nooo') {
+        } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
-        } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
+        } else if (payload[0] === 'good') {
+            response = {"text": `Very good, pushing to server ${payload[1]}  ${payload[2]} { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(''),
                 amountSpent: '',//exports.message_values.spent,
@@ -160,7 +160,7 @@ console.log(exports.message_values);
                 year: date.getFullYear(),
                 description: ''
             });
-        } else if (payload === 'badd') {
+        } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
         // Send the message to acknowledge the postback
