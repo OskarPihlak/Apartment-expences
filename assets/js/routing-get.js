@@ -89,7 +89,7 @@ module.exports = (app) =>{
     app.post('/bot/webhook', (req, res) => {
 
             // Iterates over each entry - there may be multiple if batched
-let messaging_events = req.body.entry[0].messaging_events;
+let messaging_events = req.body.entry[0].messaging;
 console.log(req.body.entry[0].messaging[0]);
 console.log(req.body.entry[0].messaging[0].message);
 for(let i=0;i<messaging_events.length;i++) {
