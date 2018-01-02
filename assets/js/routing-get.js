@@ -62,7 +62,7 @@ module.exports = (app) =>{
         }).catch(err => {throw err });
     });
     // Adds support for GET requests to our webhook
-    app.get('/webhook', (req, res) => {
+    app.get('/:id/webhook', (req, res) => {
 
         // Your verify token. Should be a random string.
         let VERIFY_TOKEN = "ourApartmentStuff";
@@ -86,7 +86,7 @@ module.exports = (app) =>{
     });
 
     // Creates the endpoint for our webhook
-    app.post('/webhook', (req, res) => {
+    app.post('/:id/webhook', (req, res) => {
 
         let body = req.body;
 
