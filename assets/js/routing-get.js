@@ -226,9 +226,8 @@ module.exports = (app) => {
                 if (webhook_event.message) {
                     console.log(JSON.stringify(webhook_event));
                     handleMessage(sender_psid, webhook_event.message);
-                    if (webhook_event.postback) {
+                }else if (webhook_event.postback) {
                         handlePostback(sender_psid, webhook_event.postback);
-                    }
                 }
 
             });
