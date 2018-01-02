@@ -76,7 +76,7 @@ module.exports = (app) => {
                     "type": "template",
                     "payload": {
                         "template_type": "button",
-                        "text": `Is this info correct ? {name: ${message[0]}, date: ${message[1]}, amount: ${message[2]}}`,
+                        "text": `Is this info correct ? {name: ${message[0]}, date: ${dates.day_number}-${dates.month_number}-${dates.year}, amount: ${message[1]}}`,
                         "buttons": [
                             {
                                 "type": "postback",
@@ -139,6 +139,8 @@ module.exports = (app) => {
         console.log(received_message);
         let response;
         let message = (received_message.text).slice(1).split('-');
+        console.log(message[0]);
+
         // Get the payload for the postback
         let payload = received_postback.payload;
         let dates = helpers.generate_month_selections();
