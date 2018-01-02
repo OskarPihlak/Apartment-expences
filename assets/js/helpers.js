@@ -97,13 +97,15 @@ module.exports.pad = function pad(n, width, z) {
 };
 module.exports.sendText = (sender, text)=>{
     let token = 'EAAH0ZBiD0bXEBADiJ9hb8TJ6iW9USCTCmO0vXBL8YzBBCfOoNIduyfqe8b7eBUxfPjYmtXqXCefi2L4Inb7E9rSsr5JfHN8dFm3EIKhiELBcnG0Aslz88rJGHb8BZAZAPBYKbbDAdAOs66p1LMAFj7G1y9AQPbJwQZBlDZBV5GgZDZD';
-  let messageData = {text: text};
+  let messageData = {text: text}
   request({
       url:'https://graph.facebook.com/v2.6/me/messages',
-      ql:{acess_token:token},
+      qs:{access_token : token},
       method: "POST",
-      recipient:{id: sender},
-      message: messageData
+      json:{
+          recipient:{id: sender},
+          message: messageData
+      },
   }, (error, response, body)=>{
       if(error){
           console.log('sending error');
