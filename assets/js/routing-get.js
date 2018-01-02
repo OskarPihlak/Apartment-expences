@@ -151,10 +151,10 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
-            response = {"text": `Very good, pushing to server ${payload[1]}  ${payload[2]} { ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()}}`};
+            response = {"text": `Very good, pushing to server ${payload[1]}  /  ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[2]} €`};
             let financeRecord = new db.finance({
-                name: helpers.capitalizeFirstLetter(''),
-                amountSpent: '',//exports.message_values.spent,
+                name: helpers.capitalizeFirstLetter(payload[1]),
+                amountSpent: payload[2],//exports.message_values.spent,
                 day: date.getDate(),
                 month: moment(date.getMonth() + 1),
                 year: date.getFullYear(),
