@@ -168,6 +168,7 @@ module.exports = (app) => {
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload[0] === 'good') {
+            response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
             let financeRecord = new db.finance({
                 name: helpers.capitalizeFirstLetter(sender_id_name),
                 amountSpent: payload[1],
@@ -183,12 +184,10 @@ module.exports = (app) => {
             }).catch(err => {
                 throw err
             });
-            let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
+           /* let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
             db.finance.find(query_string).then(result => {
                 let build_main = helpers.build_main_object(result);
-                console.log(build_main.people.oskar.precentage);
-                response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
-            });
+            });*/
 
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
