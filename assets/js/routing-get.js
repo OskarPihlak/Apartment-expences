@@ -141,14 +141,14 @@ module.exports = (app) => {
 
         // Get the payload for the postback
         let payload = received_postback.payload;
-        let dates = helpers.generate_month_selections();
+        let dates = helpers.date_now();
         // Set the response based on the postback payload
         if (payload === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
         } else if (payload === 'no') {
             response = {"text": "Oops, try sending it again."}
         } else if (payload === 'good') {
-            response = {"text": `Very good, pushing to server { date ${dates.day_number}-${dates.month_number}-${dates.year}}`};
+            response = {"text": `Very good, pushing to server { date ${dates.day}-${dates.month}-${dates.year}}`};
         } else if (payload === 'bad') {
             response = {"text": "Oops, try sending it again."}
         }
