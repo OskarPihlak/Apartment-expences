@@ -160,7 +160,7 @@ console.log(exports.message_values);
                 description: ''
             });
 
-            console.log(lol);
+
             /*            financeRecord.save().then(function (err, post) {
                             if (err) {
                                 return (err)
@@ -211,7 +211,7 @@ console.log(exports.message_values);
 
             // Iterate over each entry - there may be multiple if batched
             body.entry.forEach(function (entry) {
-
+            console.log(JSON.stringify(entry));
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
                 console.log(webhook_event);
