@@ -154,7 +154,8 @@ module.exports = (app) => {
 // Handles messaging_postbacks events
     function handlePostback(sender_psid, received_postback) {
         console.log(sender_psid);
-        if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
+       /* if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
+        else */sender_id_name = sender_psid;
         console.log('PSID SENDER'+ sender_id_name);
         console.log('postback ///////////////////////////////////// '+received_postback);
         let date = new Date();
