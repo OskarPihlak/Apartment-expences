@@ -80,14 +80,13 @@ module.exports = (app) => {
     function handleMessage(sender_psid, received_message) {
         let response;
         if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
-        else if (sender_psid == 1960253640668852){ sender_id_name = ' Sandra'}
+        else if (sender_psid == 1960253640668852){ sender_id_name = 'Sandra'}
         else sender_id_name = sender_psid;
         console.log('handlemessages///////////////////////'+sender_id_name);
         // Checks if the message contains text
         console.log('handle message ' + received_message.text);
         if (((received_message.text).toUpperCase()).startsWith('X')) {
             let message = (received_message.text).slice(1).split(' and ');
-
 
             response = {
                 "attachment": {
@@ -114,7 +113,7 @@ module.exports = (app) => {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
             response = {
-                "text": ` You sent the message: "${received_message.text}". Now send me an attachment!`
+                "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
             }
         }
         // Send the response message
