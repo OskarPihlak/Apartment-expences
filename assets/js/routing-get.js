@@ -114,7 +114,7 @@ module.exports = (app) => {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
             response = {
-                "text": `Hello ${sender_id_name}! You sent the message: "${received_message.text}". Now send me an attachment!`
+                "text": ` You sent the message: "${received_message.text}". Now send me an attachment!`
             }
         }
         // Send the response message
