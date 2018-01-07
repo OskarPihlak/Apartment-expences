@@ -113,53 +113,48 @@ module.exports = (app) => {
             // Create the payload for a basic text message, which
             // will be added to the body of our request to the Send API
             response = {
-                "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
+                "text": `Hello ${sender_id_name}! You sent the message: "${received_message.text}". Now send me an attachment!`
             }
         }
         // Send the response message
         console.log(response);
+        callSendAPI(sender_id_name, response)
 
     }
 
 // Handles messaging_postbacks events
     function handlePostback(sender_psid, received_postback) {
-        console.log(sender_psid);
+        let payload = received_postback.payload.split(',');
+        let date = new Date();
+        let response;
+        let financeRecord = new db.finance({
+            name: helpers.capitalizeFirstLetter(sender_id_name),
+            amountSpent: payload[1],
+            day: date.getDate(),
+            month: (date.getMonth() + 1),
+            year: date.getFullYear(),
+            description: payload[2].toLowerCase()
+        });
+
         if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
         else if (sender_psid == 1960253640668852){ sender_id_name = ' Sandra'}
         else sender_id_name = sender_psid;
+
         console.log('PSID SENDER'+ sender_id_name);
         console.log('postback ///////////////////////////////////// '+received_postback);
-        let date = new Date();
-        let response;
 
-        // Get the payload for the postback
-        let payload = received_postback.payload.split(',');
         // Set the response based on the postback payload
         if (payload[0] === 'yes') {
             response = {"text": "Thanks, pushing to server!"}
+
         } else if (payload[0] === 'no') {
             response = {"text": "Oops, try sending it again."}
+
         } else if (payload[0] === 'good') {
             response = {"text": `Very good, pushing to server:  ${sender_id_name} / ${date.getDate()}. ${moment(date.getMonth() + 1).format('MMMM')} - ${date.getFullYear()} / ${payload[1]} €  / ${payload[2]}`};
-            let financeRecord = new db.finance({
-                name: helpers.capitalizeFirstLetter(sender_id_name),
-                amountSpent: payload[1],
-                day: date.getDate(),
-                month: (date.getMonth() + 1),
-                year: date.getFullYear(),
-                description: payload[2].toLowerCase()
-            });
             financeRecord.save().then(function (err, post) {
-                if (err) {
-                    return (err)
-                }
-            }).catch(err => {
-                throw err
-            });
-           /* let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
-            db.finance.find(query_string).then(result => {
-                let build_main = helpers.build_main_object(result);
-            });*/
+                if (err) { return (err) }
+            }).catch(err => { throw err });
 
         } else if (payload[0] === 'bad') {
             response = {"text": "Oops, try sending it again."}
