@@ -81,6 +81,7 @@ module.exports = (app) => {
         let response;
         if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
         else if (sender_psid == 1960253640668852){ sender_id_name = 'Sandra'}
+        else if (sender_psid == 1576082319178504){ sender_id_name = 'Uibo'}
         else sender_id_name = sender_psid;
         console.log('handlemessages///////////////////////'+sender_id_name);
         // Checks if the message contains text
@@ -137,7 +138,8 @@ module.exports = (app) => {
         });
 
         if (sender_psid == 1657207370991802){ sender_id_name = 'Oskar'}
-        else if (sender_psid == 1960253640668852){ sender_id_name = ' Sandra'}
+        else if (sender_psid == 1960253640668852){ sender_id_name = 'Sandra'}
+        else if (sender_psid == 1576082319178504){ sender_id_name = 'Uibo'}
         else sender_id_name = sender_psid;
 
         console.log('PSID SENDER'+ sender_id_name);
