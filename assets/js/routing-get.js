@@ -118,7 +118,7 @@ module.exports = (app) => {
         }
         // Send the response message
         console.log(response);
-        callSendAPI(sender_id_name, response)
+        callSendAPI(sender_psid, response)
 
     }
 
@@ -181,6 +181,7 @@ module.exports = (app) => {
             "json": request_body
         }, (err, res, body) => {
             if (!err) {
+                console.log(res, err);
                 console.log('message sent!');
                 console.log('callSendAPI response' + JSON.stringify(response));
             } else {
