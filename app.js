@@ -25,6 +25,14 @@ app.set('view engine', 'handlebars');
 routing_get(app);
 routing_post(app);
 
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+});
+
 //Set port
 app.set('port', (process.env.PORT) || 3333);
 app.listen(app.get('port'), function () {
