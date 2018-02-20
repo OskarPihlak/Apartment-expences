@@ -1,155 +1,131 @@
 <div id="login">
     <form method="post" action="/post/payment">
         <fieldset>
-            <p><select class="submit-check" name="name">
-                <option>Oskar</option>
-                <option>Sandra</option>
-                <option>Uibo</option>
-                <option>Keity</option>
-            </select></p>
+               <p><select class="submit-check" name="name">
+                    {{#each data.people}}
+                    <option>{{this.name}}</option>
+                    {{/each}}
+               </select></p>
+
             <!-- JS because of IE support; better: placeholder="Username" -->
-            <p><input class="submit-check" name="amount" type="number" step="0.01" required placeholder="Amount"
-                      value="2.25"></p>
+            <p><input class="submit-check" name="amount" type="number" step="0.01" required placeholder="Amount" value="2.25" aria-label="expence-amount"></p>
             <!-- JS because of IE support; better: placeholder="Password" -->
-            <input hidden id="date123" type="date" value="2017-06-09">
-            <p><input class="submit-check" id="date" name="date" type="date" value="{{date.year}}-{{date.month}}-{{date.day}}" required></p>
-            <p><select class="submit-check" name="description">
-                <option>Food</option>
-                <option>Alchohol</option>
-                <option>Food & Alcohol</option>
-                <option>Housekeeping stuff</option>
-                <option>Other shit</option>
+            <input hidden id="date123" type="date" value="2017-06-09" aria-label="date-input">
+            <p><input class="submit-check" id="date" name="date" type="date" value="{{date.year}}-{{date.month}}-{{date.day}}" aria-label="combined-date-input" required></p>
+            <p><select class="submit-check" name="description" aria-label="expence-category">
+               {{#each data.description}}
+                   <option>{{this}}</option>
+               {{/each}}
             </select></p>
             <p><input class="submit-check" type="submit" value="Submit"></p>
         </fieldset>
     </form>
 </div>
 
-<input type="hidden" class="oskar" value="{{people.oskar.spent}}">
-<input type="hidden" class="sandra" value="{{people.sandra.spent}}">
-<input type="hidden" class="uibo" value="{{people.uibo.spent}}">
-<input type="hidden" class="luiza" value="{{people.luiza.spent}}">
+{{#each data.people}}
+<input type="hidden" class="{{this.name}}" value="{{this.spent}}">
+{{/each}}
 
 <form class="filter-form" method="post" action="/filter/update">
-  <div>
-    <input class="submit-check filter-button" type="submit" value="Filter">
-    <select class="submit-check filter-options" name="description">
-        <option>All time</option>
-        {{#each past_months}}
-            <option class="{{this.year}}-{{this.month_number}}">{{this.year}}-{{this.month_name}}</option>
-        {{/each}}
-    </select>
-  </div>
+    <div>
+        <input class="submit-check filter-button" type="submit" value="Filter" aria-label="submit">
+        <select class="submit-check filter-options" name="description" aria-label="submit-check">
+            <option>All time</option>
+            {{#each past_months}}
+                <option class="{{this.year}}-{{this.month_number}}">{{this.year}}-{{this.month_name}}</option>
+            {{/each}}
+        </select>
+    </div>
 </form>
 <p class="selected">{{selected}}</p>
-<div id="container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="pie-chart-container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-<div class="bar-container">
-    <div class="printer">
-        <section class="black-precentage-section">
-            <article>
-                <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math people.oskar.precentage '*' 2}} navy">
-                        <div class="face top">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-0">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face floor">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-a"></div>
-                        <div class="face side-b"></div>
-                        <div class="face side-1">
-                            <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Oskar {{people.oskar.spent}}
-                                    € </p></div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
-    <div class="printer">
-        <section class="black-precentage-section">
-            <article>
-                <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math people.sandra.precentage '*' 2}} gray">
-                        <div class="face top">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-0">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face floor">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-a"></div>
-                        <div class="face side-b"></div>
-                        <div class="face side-1">
-                            <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Sandra {{people.sandra.spent}}
-                                    € </p></div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
 
-    <div class="printer">
-        <section class="black-precentage-section">
-            <article>
-                <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math people.uibo.precentage '*' 2}} lime">
-                        <div class="face top">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-0">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face floor">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-a"></div>
-                        <div class="face side-b"></div>
-                        <div class="face side-1">
-                            <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Uibo {{people.uibo.spent}} € </p></div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
+{{#each data.people}}
+    <div id="{{this.name}}-gauge-container" style="fill: #e5e5e5;min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <p style="text-align: center">{{this.name}}</p>
+    <p style="text-align: center">{{this.spent}}</p>
+{{/each}}
+<div id="spline-container"></div>
+<div id="spline-container-2"></div>
+<script>
+    let chart = c3.generate({
+        bindto: '#pie-chart-container',
+        data: {
+            // iris data from R
+            type : 'pie',
+              columns:[
+                {{#each data.people}}
+                    ['{{this.name}}',{{this.spent}}],
+                {{/each}}
+            ],
+            onclick: function (d, i) { console.log("onclick", d, i); },
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+        }
+    });
 
-    <div class="printer">
-        <section class="black-precentage-section">
-            <article>
-                <div class="chart">
-                    <div class="bar bar-cartridge bar-{{math people.luiza.precentage '*' 2}} yellow">
-                        <div class="face top">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-0">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face floor">
-                            <div class="growing-bar"></div>
-                        </div>
-                        <div class="face side-a"></div>
-                        <div class="face side-b"></div>
-                        <div class="face side-1">
-                            <div class="growing-bar growing-bar-adjustment">
-                                <p class="p-adjust-black">Luiza {{people.luiza.spent}}
-                                    € </p></div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
-</div>
+//gauge
+    {{#each data.people}}
+    let gauge_{{this.name}} = c3.generate({
+        bindto: '#{{this.name}}-gauge-container',
+        data: {
+            columns: [
+                ['{{this.name}}', {{math this.precentage '*' 4}}]
+            ],
+            type: 'gauge',
+            onclick: function (d, i) { console.log("onclick", d, i); },
+            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+        },
+        gauge: {
+//        label: {
+//            format: function(value, ratio) {
+//                return value;
+//            },
+//            show: false // to turn off the min/max labels.
+//        },
+//    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+//    max: 100, // 100 is default
+//    units: ' %',
+//    width: 39 // for adjusting arc thickness
+        },
+        color: {
+            pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044','#ff8ae7', '#00eec7', '#ff8ae7'], // the three color levels for the percentage values.
+            threshold: {
+//            unit: 'value', // percentage is default
+                max: 100, // 100 is default
+                values: [30, 60, 90, 100, 150, 200, 250]
+            }
+        },
+        size: {
+            height: 180
+        }
+    });
+    {{/each}}
+
+    chart = c3.generate({
+        bindto: '#spline-container-2',
+        data: {
+            json: [
+                {{#each data.chart}}
+                    {date: '{{this.date}}', oskar:{{this.oskar}}, sandra:{{this.sandra}}, uibo:{{this.uibo}}, keity:{{this.keity}} },
+                {{/each}}
+            ],
+            keys: {
+                x:'date', // it's possible to specify 'x' when category axis
+                value: ['oskar','sandra','uibo','keity'],
+            }
+        },
+        axis: {
+            x: {
+                type: 'category'
+            }
+        }
+    });
+
+</script>
 <!--
 <div id="containerpie" style="fill:#e5e5e5; min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>-->
+
+

@@ -7,36 +7,20 @@ module.exports = (app) => {
     const colors = require('colors/safe');
     let messenger_bot_helpers = ('./assets/js/messenger-bot helpers');
     let month_selection = helpers.generate_month_selections();
-    let dates = helpers.date_now();
     let request = require('request');
     let date = new Date();
-
-
-    let query_string = {month:(date.getMonth() + 1), year:date.getFullYear()};
-    db.finance.find(query_string).then(result => {
-        let build_main = helpers.build_main_object(result);
-        console.log(result);
-        console.log(build_main.people.oskar.precentage, build_main.people.oskar.spent);
-        console.log(build_main.people.sandra.precentage, build_main.people.sandra.spent);
-        console.log(build_main.people.uibo.precentage, build_main.people.uibo.spent);
-        console.log(build_main.people.luiza.precentage, build_main.people.luiza.spent);
-    });
-
-
+    let query_string = {};
+    let data;
+     db.finance.find(query_string).then(result => { data = helpers.build_main_object(result);  }).catch(err => {throw err} );
+    setInterval(()=>{
+        db.finance.find(query_string).then(result => { data = helpers.build_main_object(result) }).catch(err => {throw err} );
+    },270000);
 
     app.get('/', (req, res) => {
-        let query_string = {};
-        db.finance.find(query_string).then(result => {
-            let build_main = helpers.build_main_object(result);
-            console.log(build_main);
-            console.log(month_selection.month_difference_array);
-            res.render('main', {
-                data: build_main.array,
-                people: build_main.people,
-                past_months: month_selection.month_difference_array,
-            });
-        }).catch(err => {
-            throw err
+        data.description = ['Food','Alcohol','Food & Alcohol','Housekeeping stuff','Other stuff'];
+        res.render('main', {
+            data:data,
+            past_months: month_selection,
         });
     });
 

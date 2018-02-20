@@ -3,8 +3,6 @@ const helpers = require('./helpers.js');
 const bodyParser = require('body-parser');
 const urlEncodedParser = bodyParser.urlencoded({extended: false});
 const moment = require('moment');
-let dates = helpers.date_now();
-
 
 module.exports = app => {
     app.post('/post/payment', urlEncodedParser, function (req, res) {
@@ -35,5 +33,14 @@ module.exports = app => {
         console.log(moment(req.body.description).format('YYYY-MM'));
         let selection = moment(req.body.description).format('YYYY-MM');
         res.redirect('/'+selection);
-    })
+    });
+
+    app.post('add-user',urlEncodedParser, (req,res)=>{
+        let userRecord = new db.finance({
+            name: req.body.name
+        });
+        userRecord.save().then((err, post) => {
+            if (err) return (err)
+        }).catch(err => {throw err} );
+    });
 };
